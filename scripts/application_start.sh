@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #give permission for everything in the  my-react-app directory
-sudo chmod -R 777 /home/ec2-user/ my-react-app
+sudo chmod -R 777 /home/ec2-user/my-react-app
 
 #navigate into our working directory where we have all our github files
 cd /home/ec2-user/my-react-app
