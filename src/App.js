@@ -1,23 +1,64 @@
 import logo from './logo.svg';
 import './App.css';
+import {useState} from 'react'
+import axios from 'axios';
 
 function App() {
+  const listOfDatas = [];
+  const [errormessage, setErrorMessage] =useState(null);
+
+
+  const postData = async function(e){
+
+    e.preventDefault();
+    const title = document.getElementById('title').value;
+    const description = document.getElementById('description').value;
+    const published = document.getElementById('published').value;
+
+    await axios.post('/tutorials', {title, description, published}).then(data =>{
+      // console.log(data)
+      // data.data.forEach(({title, description}, key)=>{
+      //   listOfDatas.push(<li key={key+1}> {title} </li>)
+      // })
+      setErrorMessage(data.data);
+    }).catch(err => console.log(err));
+  }
+  
+  const getData = async function(){
+
+    await axios.get('/tutorials').then(data =>{
+      console.log(data.data)
+
+      setErrorMessage(data.data)
+
+    }).catch(err => console.log(err));
+  }
+
+  if(errormessage)  errormessage.forEach(({title, description}, key)=>{
+    listOfDatas.push(<li key={key+1}> {title} </li>)
+  })
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      <form action="/newdata" onSubmit={postData}>
+        <label htmlform="fname">Title:</label><br/>
+        <input type="text" id="title" name="title" /><br/>
+        <label htmlform="lname">Description:</label><br/>
+        <input type="text" id="description" name="description"/><br/>
+        <label htmlform="lname">published:</label><br/>
+        <input type="text" id="published" name="published"/><br/>
+        <input type="submit" value="Submit"/>
+      </form> 
+
+      <p>If you click the "Submit" button, the htmlFormm-data will be sent to a page called "/tutorials".</p>
+
+
+      <button onClick={getData}>Fetch</button>
+      <ul>
+        {listOfDatas}
+      </ul>
+      
     </div>
   );
 }
