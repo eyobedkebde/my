@@ -21,7 +21,13 @@ function App() {
       // data.data.forEach(({title, description}, key)=>{
       //   listOfDatas.push(<li key={key+1}> {title} </li>)
       // })
-      setErrorMessage(data.data);
+      console.log(data);
+
+      
+        listOfDatas.push(<li key={1}> {data.data.title} </li>)
+    
+
+      // setErrorMessage(data.data);
     }).catch(err => console.log(err));
   }
   
@@ -30,14 +36,21 @@ function App() {
     await axios.get('/tutorials').then(data =>{
       console.log(data.data)
 
+      data.data.forEach(({title, description}, key)=>{
+        listOfDatas.push(<li key={key+1}> {title} </li>)
+      });
+
       setErrorMessage(data.data)
 
     }).catch(err => console.log(err));
   }
+  
+  if(errormessage)
+    errormessage.forEach(({title, description}, key)=>{
+      listOfDatas.push(<li key={key+1}> {title} </li>)
+    });
 
-  if(errormessage)  errormessage.forEach(({title, description}, key)=>{
-    listOfDatas.push(<li key={key+1}> {title} </li>)
-  })
+  
 
   return (
     <div className="App">
