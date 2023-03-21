@@ -5,9 +5,9 @@ module.exports = {
 
     entry: './src/index.js',
 
-    output:{
+    output: {
         path: path.join(__dirname, '/dist'),
-        filename:"bundle.js"
+        filename: "bundle.js"
     },
 
     plugins: [
@@ -38,15 +38,24 @@ module.exports = {
         ]
     },
     devServer: {
+
         proxy: {
-            '/api': 'http://localhost:8080',
-          },
+            '/api': {
+                target: 'http://localhost:8080',
+                changeOrigin: true,
+            }
+        },
 
         static: {
-          directory: path.join(__dirname, 'dist'),
+            directory: path.join(__dirname, 'dist'),
         },
         compress: true,
         port: 9000,
-        allowedHosts:["all"]
-      },
+        allowedHosts: "all"
+    },
+    performance: {
+        hints: false,
+        maxEntrypointSize: 512000,
+        maxAssetSize: 512000
+    }
 }
