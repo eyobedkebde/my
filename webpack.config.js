@@ -38,6 +38,15 @@ module.exports = {
         ]
     },
     devServer: {
-        disableHostCheck: true
-      }
+        proxy: {
+            '/api': 'http://localhost:8080',
+          },
+
+        static: {
+          directory: path.join(__dirname, 'dist'),
+        },
+        compress: true,
+        port: 9000,
+        allowedHosts:["all"]
+      },
 }
