@@ -33,7 +33,7 @@ function App() {
   
   const getData = async function(){
 
-    await axios.get('api/tutorials').then(data =>{
+    await axios.get('/tutorials').then(data =>{
       console.log(data.data)
 
       data.data.forEach(({title, description}, key)=>{
